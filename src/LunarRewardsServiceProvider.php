@@ -2,9 +2,9 @@
 
 namespace Hyrograsper\LunarRewards;
 
+use Hyrograsper\LunarRewards\Commands\LunarRewardsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Hyrograsper\LunarRewards\Commands\LunarRewardsCommand;
 
 class LunarRewardsServiceProvider extends PackageServiceProvider
 {
