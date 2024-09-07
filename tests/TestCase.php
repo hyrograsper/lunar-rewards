@@ -2,9 +2,9 @@
 
 namespace Hyrograsper\LunarRewards\Tests;
 
+use Hyrograsper\LunarRewards\LunarRewardsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Hyrograsper\LunarRewards\LunarRewardsServiceProvider;
 
 class TestCase extends Orchestra
 {
