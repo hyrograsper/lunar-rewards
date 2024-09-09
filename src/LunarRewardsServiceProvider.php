@@ -6,7 +6,6 @@ use Hyrograsper\LunarRewards\Base\RewardManagerInterface;
 use Hyrograsper\LunarRewards\Managers\RewardManager;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Hyrograsper\LunarRewards\Commands\LunarRewardsCommand;
 
 class LunarRewardsServiceProvider extends PackageServiceProvider
 {
