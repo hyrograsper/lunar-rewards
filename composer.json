@@ -17,11 +17,13 @@
     ],
     "require": {
         "php": "^8.2",
-        "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^10.0||^11.0"
+        "illuminate/contracts": "^10.0||^11.0",
+        "spatie/laravel-package-tools": "^1.16"
     },
     "require-dev": {
+        "filament/filament": "^3.2",
         "laravel/pint": "^1.14",
+        "lunarphp/lunar": "^1.0.0-alpha",
         "nunomaduro/collision": "^8.1.1||^7.10.0",
         "orchestra/testbench": "^9.0.0||^8.22.0",
         "pestphp/pest": "^2.34",
