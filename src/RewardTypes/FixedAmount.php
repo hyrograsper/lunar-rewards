@@ -4,7 +4,6 @@ namespace Hyrograsper\LunarRewards\RewardTypes;
 
 use Lunar\Models\Cart;
 
-
 class FixedAmount extends AbstractRewardType
 {
     /**

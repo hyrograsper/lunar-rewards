@@ -108,7 +108,7 @@ class RewardsResource extends BaseResource
                 )->schema(
                     static::getFixedAmountFormComponents()
                 ),
-            ...$rewardSchemas
+            ...$rewardSchemas,
         ]);
     }
 

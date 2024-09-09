@@ -13,5 +13,5 @@ return [
         'fixed_amount' => [
             'heading' => 'Fixed Amount',
         ],
-    ]
+    ],
 ];

@@ -15,7 +15,6 @@ class SpendXEarnY extends AbstractRewardType
         return 'Spend X Earn Y';
     }
 
-
     /**
      * Called just before cart totals are calculated.
      *
