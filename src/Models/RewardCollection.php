@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Lunar\Base\BaseModel;
 use Lunar\Models\Collection;
 
-
 class RewardCollection extends BaseModel implements RewardCollectionContract
 {
     protected $casts = [];

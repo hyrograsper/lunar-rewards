@@ -130,7 +130,7 @@ class RewardManager implements RewardManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function addType($classname): RewardManagerInterface
     {
@@ -138,7 +138,7 @@ class RewardManager implements RewardManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getTypes(): Collection
     {
@@ -148,7 +148,7 @@ class RewardManager implements RewardManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function addApplied(CartReward $cartReward): RewardManagerInterface
     {
@@ -158,7 +158,7 @@ class RewardManager implements RewardManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getApplied(): Collection
     {
@@ -166,7 +166,7 @@ class RewardManager implements RewardManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function apply(Cart $cart): Cart
     {
@@ -176,7 +176,7 @@ class RewardManager implements RewardManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function validateCoupon(string $coupon): bool
     {

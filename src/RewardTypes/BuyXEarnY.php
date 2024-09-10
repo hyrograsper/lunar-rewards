@@ -2,14 +2,8 @@
 
 namespace Hyrograsper\LunarRewards\RewardTypes;
 
-use Illuminate\Pipeline\Pipeline;
-use Illuminate\Support\Collection;
-use Lunar\Base\ValueObjects\Cart\DiscountBreakdown;
-use Lunar\Base\ValueObjects\Cart\DiscountBreakdownLine;
-use Lunar\DataTypes\Price;
 use Lunar\Models\Cart;
 use Lunar\Models\CartLine;
-use Lunar\Models\Product;
 
 class BuyXEarnY extends AbstractRewardType
 {

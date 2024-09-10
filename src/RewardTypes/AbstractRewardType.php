@@ -17,9 +17,6 @@ abstract class AbstractRewardType implements RewardTypeInterface
 
     /**
      * Set the data for the reward to user.
-     *
-     * @param Reward $reward
-     * @return AbstractRewardType
      */
     public function with(Reward $reward): self
     {
@@ -44,9 +41,6 @@ abstract class AbstractRewardType implements RewardTypeInterface
 
     /**
      * Return the eligible lines for the reward.
-     *
-     * @param Cart $cart
-     * @return Collection
      */
     protected function getEligibleLines(Cart $cart): Collection
     {
@@ -66,7 +60,6 @@ abstract class AbstractRewardType implements RewardTypeInterface
     /**
      * Check how many times this reward has been used by the logged in user's customers
      *
-     * @param Authenticatable $user
      * @return int
      */
     protected function usesByUser(Authenticatable $user)

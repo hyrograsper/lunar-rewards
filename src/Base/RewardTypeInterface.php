@@ -3,7 +3,6 @@
 namespace Hyrograsper\LunarRewards\Base;
 
 use Lunar\Models\Cart;
-use Lunar\Models\CartLine;
 
 interface RewardTypeInterface
 {
@@ -14,9 +13,6 @@ interface RewardTypeInterface
 
     /**
      * Execute and apply the discount if conditions are met.
-     *
-     * @param Cart $cart
-     * @return Cart
      */
     public function apply(Cart $cart): Cart;
 }
