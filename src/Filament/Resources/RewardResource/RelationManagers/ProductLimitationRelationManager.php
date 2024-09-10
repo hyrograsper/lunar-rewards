@@ -15,6 +15,8 @@ class ProductLimitationRelationManager extends BaseRelationManager
 
     protected static string $relationship = 'purchasables';
 
+    protected static ?string $title = 'Products';
+
     public function isReadOnly(): bool
     {
         return false;

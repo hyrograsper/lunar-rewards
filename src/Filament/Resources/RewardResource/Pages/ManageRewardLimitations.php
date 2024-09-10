@@ -5,12 +5,12 @@ namespace Hyrograsper\LunarRewards\Filament\Resources\RewardResource\Pages;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationGroup;
 use Filament\Support\Facades\FilamentIcon;
+use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\BrandLimitationRelationManager;
+use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\CollectionLimitationRelationManager;
+use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductLimitationRelationManager;
+use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductVariantLimitationRelationManager;
 use Hyrograsper\LunarRewards\Filament\Resources\RewardsResource;
 use Illuminate\Contracts\Support\Htmlable;
-use Lunar\Admin\Filament\Resources\DiscountResource\RelationManagers\BrandLimitationRelationManager;
-use Lunar\Admin\Filament\Resources\DiscountResource\RelationManagers\CollectionLimitationRelationManager;
-use Lunar\Admin\Filament\Resources\DiscountResource\RelationManagers\ProductLimitationRelationManager;
-use Lunar\Admin\Filament\Resources\DiscountResource\RelationManagers\ProductVariantLimitationRelationManager;
 use Lunar\Admin\Support\Pages\BaseEditRecord;
 
 class ManageRewardLimitations extends BaseEditRecord

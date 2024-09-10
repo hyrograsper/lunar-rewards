@@ -1,6 +1,7 @@
 <?php
 
 namespace Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers;
+
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -15,6 +16,8 @@ class ProductVariantLimitationRelationManager extends BaseRelationManager
     protected static bool $isLazy = false;
 
     protected static string $relationship = 'purchasables';
+
+    protected static ?string $title = 'Product Variants';
 
     public function isReadOnly(): bool
     {

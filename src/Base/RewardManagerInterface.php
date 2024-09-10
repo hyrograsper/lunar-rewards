@@ -3,8 +3,8 @@
 namespace Hyrograsper\LunarRewards\Base;
 
 use Illuminate\Support\Collection;
-use Lunar\Base\DataTransferObjects\CartDiscount;
 use Lunar\Models\Cart;
+use Hyrograsper\LunarRewards\Base\DataTransferObjects\CartReward;
 
 interface RewardManagerInterface
 {
@@ -23,7 +23,7 @@ interface RewardManagerInterface
     /**
      * Add an applied discount
      */
-    public function addApplied(CartDiscount $cartDiscount): self;
+    public function addApplied(CartReward $cartReward): self;
 
     /**
      * Return the applied discounts

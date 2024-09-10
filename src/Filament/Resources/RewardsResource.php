@@ -26,16 +26,17 @@ use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\Pages\EditRewards
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\Pages\ListRewards;
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\Pages\ManageRewardAvailability;
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\Pages\ManageRewardLimitations;
+use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\BrandLimitationRelationManager;
+use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\CollectionLimitationRelationManager;
+use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductConditionRelationManager;
+use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductLimitationRelationManager;
+use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductRewardRelationManager;
+use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductVariantLimitationRelationManager;
 use Hyrograsper\LunarRewards\Models\Reward;
 use Hyrograsper\LunarRewards\RewardTypes\BuyXEarnY;
 use Hyrograsper\LunarRewards\RewardTypes\FixedAmount;
+use Hyrograsper\LunarRewards\RewardTypes\SpendXEarnY;
 use Illuminate\Support\Str;
-use Lunar\Admin\Filament\Resources\DiscountResource\RelationManagers\BrandLimitationRelationManager;
-use Lunar\Admin\Filament\Resources\DiscountResource\RelationManagers\CollectionLimitationRelationManager;
-use Lunar\Admin\Filament\Resources\DiscountResource\RelationManagers\ProductConditionRelationManager;
-use Lunar\Admin\Filament\Resources\DiscountResource\RelationManagers\ProductLimitationRelationManager;
-use Lunar\Admin\Filament\Resources\DiscountResource\RelationManagers\ProductRewardRelationManager;
-use Lunar\Admin\Filament\Resources\DiscountResource\RelationManagers\ProductVariantLimitationRelationManager;
 use Lunar\Admin\Support\Resources\BaseResource;
 use Lunar\Models\Currency;
 
@@ -70,14 +71,14 @@ class RewardsResource extends BaseResource
     public static function getDefaultForm(Form $form): Form
     {
         $rewardSchemas = Rewards::getTypes()->map(function ($reward) {
-            if (! $reward instanceof LunarPanelRewardInterface) {
+            if (!$reward instanceof LunarPanelRewardInterface) {
                 return;
             }
 
             return Section::make(Str::slug(get_class($reward)))
                 ->heading($reward->getName())
                 ->visible(
-                    fn (Get $get) => $get('type') == get_class($reward)
+                    fn(Get $get) => $get('type') == get_class($reward)
                 )->schema($reward->lunarPanelSchema());
         })->filter();
 
@@ -88,25 +89,34 @@ class RewardsResource extends BaseResource
             Section::make('conditions')->schema(
                 static::getConditionsFormComponents()
             )->heading(
-                __('lunarpanel::discount.form.conditions.heading')
+                __('lunar-rewards::reward.form.conditions.heading')
             ),
-            Section::make('buy_x_get_y')
+            Section::make('buy_x_earn_y')
                 ->heading(
-                    __('lunarpanel::discount.form.buy_x_get_y.heading')
+                    __('lunar-rewards::reward.form.buy_x_earn_y.heading')
                 )
                 ->visible(
-                    fn (Get $get) => $get('type') == BuyXEarnY::class
+                    fn(Get $get) => $get('type') == BuyXEarnY::class
                 )->schema(
                     static::getBuyXEarnYFormComponents()
                 ),
             Section::make('amount_off')
                 ->heading(
-                    __('lunarpanel::discount.form.amount_off.heading')
+                    __('lunar-rewards::reward.form.fixed_amount.heading')
                 )
                 ->visible(
-                    fn (Get $get) => $get('type') == FixedAmount::class
+                    fn(Get $get) => $get('type') == FixedAmount::class
                 )->schema(
                     static::getFixedAmountFormComponents()
+                ),
+            Section::make('spend_x_earn_y')
+                ->heading(
+                    __('lunar-rewards::reward.form.spend_x_earn_y.heading')
+                )
+                ->visible(
+                    fn(Get $get) => $get('type') == SpendXEarnY::class
+                )->schema(
+                    static::getSpendXEarnYFormComponents()
                 ),
             ...$rewardSchemas
         ]);
@@ -124,7 +134,7 @@ class RewardsResource extends BaseResource
                 static::getEndsAtFormComponent(),
             ])->columns(2),
             Group::make([
-                static::getDiscountTypeFormComponent(),
+                static::getRewardTypeFormComponent(),
             ])->columns(2),
         ];
     }
@@ -247,7 +257,7 @@ class RewardsResource extends BaseResource
         $inputs = [];
 
         foreach ($currencies as $currency) {
-            $inputs[] = TextInput::make('data.min_prices.'.$currency->code)->label(
+            $inputs[] = TextInput::make('data.min_prices.' . $currency->code)->label(
                 $currency->code
             )->afterStateHydrated(function (TextInput $component, $state) {
                 $currencyCode = last(explode('.', $component->getStatePath()));
@@ -262,23 +272,68 @@ class RewardsResource extends BaseResource
         return $inputs;
     }
 
-    public static function getDiscountTypeFormComponent(): Component
+    public static function getRewardTypeFormComponent(): Component
     {
         return Select::make('type')->options(
             Rewards::getTypes()->mapWithKeys(
-                fn ($type) => [get_class($type) => $type->getName()]
+                fn($type) => [get_class($type) => $type->getName()]
             )
         )->required()->live();
     }
 
     public static function getBuyXEarnYFormComponents(): array
     {
-        return [];
+        return [
+            Group::make([
+                TextInput::make('data.min_qty')
+                    ->label(
+                        __('lunar-rewards::reward.form.min_qty.label')
+                    )->helperText(
+                        __('lunar-rewards::reward.form.min_qty.helper_text')
+                    )->numeric(),
+                TextInput::make('data.reward_qty')
+                    ->label(
+                        __('lunar-rewards::reward.form.buy_x_earn_y.reward_qty.label')
+                    )->helperText(
+                        __('lunar-rewards::reward.form.buy_x_earn_y.reward_qty.helper_text')
+                    )->numeric(),
+            ])->columns(2)
+        ];
+    }
+
+    public static function getSpendXEarnYFormComponents(): array
+    {
+        return [
+            Group::make([
+                TextInput::make('data.min_qty')
+                    ->label(
+                        __('lunar-rewards::reward.form.spend_x_earn_y.min_qty.label')
+                    )->helperText(
+                        __('lunar-rewards::reward.form.spend_x_earn_y.min_qty.helper_text')
+                    )->numeric(),
+                TextInput::make('data.reward_qty')
+                    ->label(
+                        __('lunar-rewards::reward.form.spend_x_earn_y.reward_qty.label')
+                    )->helperText(
+                        __('lunar-rewards::reward.form.spend_x_earn_y.reward_qty.helper_text')
+                    )->numeric(),
+            ])->columns(2)
+        ];
     }
 
     public static function getFixedAmountFormComponents(): array
     {
-        return [];
+        return [
+            Toggle::make('data.fixed_value')->live(),
+            TextInput::make('data.percentage')->visible(
+                fn(Get $get) => !$get('data.fixed_value')
+            )->numeric(),
+            TextInput::make('data.reward_qty')->label(
+                __('lunar-rewards::reward.form.spend_x_earn_y.reward_qty.label')
+            )->visible(
+                fn(Get $get) => (bool)$get('data.fixed_value')
+            )->numeric(),
+        ];
     }
 
     public static function getDefaultTable(Table $table): Table
@@ -307,7 +362,7 @@ class RewardsResource extends BaseResource
                 })
                 ->label(__('lunar-rewards::reward.table.status.label'))
                 ->badge()
-                ->color(fn (string $state): string => match ($state) {
+                ->color(fn(string $state): string => match ($state) {
                     Reward::ACTIVE => 'success',
                     Reward::EXPIRED => 'danger',
                     Reward::PENDING => 'gray',
@@ -336,8 +391,8 @@ class RewardsResource extends BaseResource
             BrandLimitationRelationManager::class,
             ProductLimitationRelationManager::class,
             ProductVariantLimitationRelationManager::class,
-            ProductRewardRelationManager::class,
-            ProductConditionRelationManager::class,
+//            ProductRewardRelationManager::class,
+//            ProductConditionRelationManager::class,
         ];
     }
 
