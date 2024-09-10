@@ -20,15 +20,17 @@ class LunarRewardsServiceProvider extends PackageServiceProvider
 
         Brand::resolveRelationUsing('rewards', function (Brand $brand) {
             $prefix = config('lunar.database.table_prefix');
+
             return $brand->belongsToMany(Reward::class, $prefix.'brand_reward');
         });
 
         Collection::resolveRelationUsing('rewards', function (Collection $collection) {
             $prefix = config('lunar.database.table_prefix');
+
             return $collection->belongsToMany(Reward::class, $prefix.'collection_reward');
         });
 
-//        $this->mergeConfigFrom(__DIR__.'/config/lunar-rewards.php');
+        //        $this->mergeConfigFrom(__DIR__.'/config/lunar-rewards.php');
 
         $package
             ->name('lunar-rewards')

@@ -8,7 +8,6 @@ use Hyrograsper\LunarRewards\Models\Reward;
 use Hyrograsper\LunarRewards\RewardTypes\BuyXEarnY;
 use Hyrograsper\LunarRewards\RewardTypes\FixedAmount;
 use Hyrograsper\LunarRewards\RewardTypes\SpendXEarnY;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Lunar\Models\Cart;
 use Lunar\Models\Channel;
@@ -40,10 +39,10 @@ class RewardManager implements RewardManagerInterface
     public function channel(Channel|iterable $channel): self
     {
         $channels = collect(
-            !is_iterable($channel) ? [$channel] : $channel
+            ! is_iterable($channel) ? [$channel] : $channel
         );
 
-        if ($nonChannel = $channels->filter(fn($channel) => !$channel instanceof Channel)->first()) {
+        if ($nonChannel = $channels->filter(fn ($channel) => ! $channel instanceof Channel)->first()) {
             throw new InvalidArgumentException(
                 __('lunar-rewards::exceptions.rewards.invalid_type', [
                     'expected' => Channel::class,
@@ -60,10 +59,10 @@ class RewardManager implements RewardManagerInterface
     public function customerGroup(CustomerGroup|iterable $customerGroups): self
     {
         $customerGroups = collect(
-            !is_iterable($customerGroups) ? [$customerGroups] : $customerGroups
+            ! is_iterable($customerGroups) ? [$customerGroups] : $customerGroups
         );
 
-        if ($nonGroup = $customerGroups->filter(fn($channel) => !$channel instanceof CustomerGroup)->first()) {
+        if ($nonGroup = $customerGroups->filter(fn ($channel) => ! $channel instanceof CustomerGroup)->first()) {
             throw new InvalidArgumentException(
                 __('lunar::exceptions.rewards.invalid_type', [
                     'expected' => CustomerGroup::class,
@@ -170,7 +169,7 @@ class RewardManager implements RewardManagerInterface
      */
     public function apply(Cart $cart): Cart
     {
-        if (!$this->rewards || $this->rewards?->isEmpty()) {
+        if (! $this->rewards || $this->rewards?->isEmpty()) {
             $this->rewards = $this->getRewards($cart);
         }
     }

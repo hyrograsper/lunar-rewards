@@ -2,9 +2,9 @@
 
 namespace Hyrograsper\LunarRewards\Base;
 
+use Hyrograsper\LunarRewards\Base\DataTransferObjects\CartReward;
 use Illuminate\Support\Collection;
 use Lunar\Models\Cart;
-use Hyrograsper\LunarRewards\Base\DataTransferObjects\CartReward;
 
 interface RewardManagerInterface
 {
