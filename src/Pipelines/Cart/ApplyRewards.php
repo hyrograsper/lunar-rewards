@@ -1,6 +1,6 @@
 <?php
 
-namespace Hyrograsper\LunarRewards\Pipelines\Order;
+namespace Hyrograsper\LunarRewards\Pipelines\Cart;
 
 use Closure;
 use Hyrograsper\LunarRewards\Facades\Rewards;
@@ -10,8 +10,7 @@ final class ApplyRewards
 {
     public function handle(Cart $cart, Closure $next)
     {
-        $cart->rewards = collect([]);
-        $cart->rewardBreakdown = collect([]);
+        \Cache::forget(get_class($cart) . $cart->id . '_rewards');
 
         Rewards::apply($cart);
 

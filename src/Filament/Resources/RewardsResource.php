@@ -28,9 +28,7 @@ use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\Pages\ManageRewar
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\Pages\ManageRewardLimitations;
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\BrandLimitationRelationManager;
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\CollectionLimitationRelationManager;
-use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductConditionRelationManager;
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductLimitationRelationManager;
-use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductRewardRelationManager;
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductVariantLimitationRelationManager;
 use Hyrograsper\LunarRewards\Models\Reward;
 use Hyrograsper\LunarRewards\RewardTypes\BuyXEarnY;
@@ -60,7 +58,7 @@ class RewardsResource extends BaseResource
 
     public static function getNavigationIcon(): ?string
     {
-        return FilamentIcon::resolve('lunar::discounts');
+        return FilamentIcon::resolve('lunar-rewards::rewards');
     }
 
     public static function getNavigationGroup(): ?string
@@ -389,8 +387,8 @@ class RewardsResource extends BaseResource
         return [
             CollectionLimitationRelationManager::class,
             BrandLimitationRelationManager::class,
-            ProductLimitationRelationManager::class,
-            ProductVariantLimitationRelationManager::class,
+//            ProductLimitationRelationManager::class,
+//            ProductVariantLimitationRelationManager::class,
 //            ProductRewardRelationManager::class,
 //            ProductConditionRelationManager::class,
         ];

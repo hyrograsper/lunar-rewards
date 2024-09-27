@@ -3,7 +3,7 @@
 return [
     'pipelines' => [
         'order' => [
-            \Hyrograsper\LunarRewards\Pipelines\Order\ApplyRewards::class,
+            \Hyrograsper\LunarRewards\Pipelines\Cart\ApplyRewards::class,
         ]
     ]
 ];
