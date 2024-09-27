@@ -8,9 +8,8 @@ class RewardBreakdownLine
 {
     public function __construct(
         public CartLine $line,
-        public int      $quantity,
-    )
-    {
+        public int $quantity,
+    ) {
         //
     }
 }

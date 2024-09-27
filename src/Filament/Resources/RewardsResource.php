@@ -69,14 +69,14 @@ class RewardsResource extends BaseResource
     public static function getDefaultForm(Form $form): Form
     {
         $rewardSchemas = Rewards::getTypes()->map(function ($reward) {
-            if (!$reward instanceof LunarPanelRewardInterface) {
+            if (! $reward instanceof LunarPanelRewardInterface) {
                 return;
             }
 
             return Section::make(Str::slug(get_class($reward)))
                 ->heading($reward->getName())
                 ->visible(
-                    fn(Get $get) => $get('type') == get_class($reward)
+                    fn (Get $get) => $get('type') == get_class($reward)
                 )->schema($reward->lunarPanelSchema());
         })->filter();
 
@@ -94,7 +94,7 @@ class RewardsResource extends BaseResource
                     __('lunar-rewards::reward.form.buy_x_earn_y.heading')
                 )
                 ->visible(
-                    fn(Get $get) => $get('type') == BuyXEarnY::class
+                    fn (Get $get) => $get('type') == BuyXEarnY::class
                 )->schema(
                     static::getBuyXEarnYFormComponents()
                 ),
@@ -103,7 +103,7 @@ class RewardsResource extends BaseResource
                     __('lunar-rewards::reward.form.fixed_amount.heading')
                 )
                 ->visible(
-                    fn(Get $get) => $get('type') == FixedAmount::class
+                    fn (Get $get) => $get('type') == FixedAmount::class
                 )->schema(
                     static::getFixedAmountFormComponents()
                 ),
@@ -112,11 +112,11 @@ class RewardsResource extends BaseResource
                     __('lunar-rewards::reward.form.spend_x_earn_y.heading')
                 )
                 ->visible(
-                    fn(Get $get) => $get('type') == SpendXEarnY::class
+                    fn (Get $get) => $get('type') == SpendXEarnY::class
                 )->schema(
                     static::getSpendXEarnYFormComponents()
                 ),
-            ...$rewardSchemas
+            ...$rewardSchemas,
         ]);
     }
 
@@ -255,7 +255,7 @@ class RewardsResource extends BaseResource
         $inputs = [];
 
         foreach ($currencies as $currency) {
-            $inputs[] = TextInput::make('data.min_prices.' . $currency->code)->label(
+            $inputs[] = TextInput::make('data.min_prices.'.$currency->code)->label(
                 $currency->code
             )->afterStateHydrated(function (TextInput $component, $state) {
                 $currencyCode = last(explode('.', $component->getStatePath()));
@@ -274,7 +274,7 @@ class RewardsResource extends BaseResource
     {
         return Select::make('type')->options(
             Rewards::getTypes()->mapWithKeys(
-                fn($type) => [get_class($type) => $type->getName()]
+                fn ($type) => [get_class($type) => $type->getName()]
             )
         )->required()->live();
     }
@@ -295,7 +295,7 @@ class RewardsResource extends BaseResource
                     )->helperText(
                         __('lunar-rewards::reward.form.buy_x_earn_y.reward_qty.helper_text')
                     )->numeric(),
-            ])->columns(2)
+            ])->columns(2),
         ];
     }
 
@@ -315,7 +315,7 @@ class RewardsResource extends BaseResource
                     )->helperText(
                         __('lunar-rewards::reward.form.spend_x_earn_y.reward_qty.helper_text')
                     )->numeric(),
-            ])->columns(2)
+            ])->columns(2),
         ];
     }
 
@@ -324,12 +324,12 @@ class RewardsResource extends BaseResource
         return [
             Toggle::make('data.fixed_value')->live(),
             TextInput::make('data.percentage')->visible(
-                fn(Get $get) => !$get('data.fixed_value')
+                fn (Get $get) => ! $get('data.fixed_value')
             )->numeric(),
             TextInput::make('data.reward_qty')->label(
                 __('lunar-rewards::reward.form.spend_x_earn_y.reward_qty.label')
             )->visible(
-                fn(Get $get) => (bool)$get('data.fixed_value')
+                fn (Get $get) => (bool) $get('data.fixed_value')
             )->numeric(),
         ];
     }
@@ -360,7 +360,7 @@ class RewardsResource extends BaseResource
                 })
                 ->label(__('lunar-rewards::reward.table.status.label'))
                 ->badge()
-                ->color(fn(string $state): string => match ($state) {
+                ->color(fn (string $state): string => match ($state) {
                     Reward::ACTIVE => 'success',
                     Reward::EXPIRED => 'danger',
                     Reward::PENDING => 'gray',
@@ -387,10 +387,10 @@ class RewardsResource extends BaseResource
         return [
             CollectionLimitationRelationManager::class,
             BrandLimitationRelationManager::class,
-//            ProductLimitationRelationManager::class,
-//            ProductVariantLimitationRelationManager::class,
-//            ProductRewardRelationManager::class,
-//            ProductConditionRelationManager::class,
+            //            ProductLimitationRelationManager::class,
+            //            ProductVariantLimitationRelationManager::class,
+            //            ProductRewardRelationManager::class,
+            //            ProductConditionRelationManager::class,
         ];
     }
 

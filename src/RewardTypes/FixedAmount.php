@@ -4,7 +4,6 @@ namespace Hyrograsper\LunarRewards\RewardTypes;
 
 use Hyrograsper\LunarRewards\Base\ValueObjects\Cart\RewardBreakdown;
 use Hyrograsper\LunarRewards\Base\ValueObjects\Cart\RewardBreakdownLine;
-use Lunar\Models\Collection;
 use Lunar\Models\Cart;
 
 class FixedAmount extends AbstractRewardType
@@ -42,7 +41,6 @@ class FixedAmount extends AbstractRewardType
         $rewardFactor = $values['reward_qty'] ?? 0;
 
         $eligibleLines = $this->getEligibleLines($cart);
-
 
         $affectedLines = collect();
 

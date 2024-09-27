@@ -15,12 +15,12 @@ class RewardsOverviewWidget extends BaseWidget
 
     protected function getStats(): array
     {
-        if (!$this->record) {
+        if (! $this->record) {
             return [];
         }
 
         $orders = $this->record->orders()
-            ->whereHas("rewards", function ($rewards) {
+            ->whereHas('rewards', function ($rewards) {
                 $rewards
                     ->active()
                     ->current();

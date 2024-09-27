@@ -4,7 +4,6 @@ namespace Hyrograsper\LunarRewards\Models;
 
 use Hyrograsper\LunarRewards\Models\Contracts\RewardCollection as RewardCollectionContract;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Kalnoy\Nestedset\QueryBuilder;
 use Lunar\Base\BaseModel;
 use Lunar\Models\Collection;
 

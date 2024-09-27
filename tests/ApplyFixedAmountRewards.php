@@ -6,5 +6,4 @@ it('can apply fixed amount rewards', function () {
 
     $this->assertNotNull($cart);
 
-
 });
