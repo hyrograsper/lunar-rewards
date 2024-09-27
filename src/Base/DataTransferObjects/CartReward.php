@@ -11,8 +11,7 @@ class CartReward
     public function __construct(
         public CartLine|Cart $model,
         public Reward $reward
-    )
-    {
+    ) {
         //
     }
 }

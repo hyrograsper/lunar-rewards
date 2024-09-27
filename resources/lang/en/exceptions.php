@@ -2,6 +2,6 @@
 
 return [
     'rewards' => [
-        'invalid_type' => 'Collection must only contain ":expected", found ":actual"'
-    ]
+        'invalid_type' => 'Collection must only contain ":expected", found ":actual"',
+    ],
 ];
