@@ -3,7 +3,9 @@
 return [
     'customer' => [
         'rewards_overview' => [
-            'label' => 'Current Rewards'
+            'current' => 'Current Rewards',
+            'total' => 'Total Rewards',
+            'redeemed' => 'Rewards Redeemed',
         ]
     ]
 ];

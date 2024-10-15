@@ -16,6 +16,7 @@ use Lunar\Admin\Filament\Resources\CustomerResource\Pages\ViewCustomer;
 use Lunar\Models\Brand;
 use Lunar\Models\Collection;
 use Lunar\Models\Order;
+use Lunar\Models\Product;
 
 class LunarRewards implements Plugin
 {
@@ -51,6 +52,13 @@ class LunarRewards implements Plugin
         Order::resolveRelationUsing('rewards', function (Order $order) {
             $prefix = config('lunar.database.table_prefix');
             return $order->belongsToMany(Reward::class, $prefix.'order_reward')
+                ->withTimestamps();
+        });
+
+        Product::resolveRelationUsing('rewards', function (Product $product) {
+            $prefix = config('lunar.database.table_prefix');
+            return $product->belongsToMany(Reward::class, $prefix.'reward_purchasables', 'purchasable_id','reward_id')
+                ->where('purchasable_type', '=', 'product')
                 ->withTimestamps();
         });
 

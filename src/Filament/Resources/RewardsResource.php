@@ -28,7 +28,9 @@ use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\Pages\ManageRewar
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\Pages\ManageRewardLimitations;
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\BrandLimitationRelationManager;
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\CollectionLimitationRelationManager;
+use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductConditionRelationManager;
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductLimitationRelationManager;
+use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductRewardRelationManager;
 use Hyrograsper\LunarRewards\Filament\Resources\RewardResource\RelationManagers\ProductVariantLimitationRelationManager;
 use Hyrograsper\LunarRewards\Models\Reward;
 use Hyrograsper\LunarRewards\RewardTypes\BuyXEarnY;
@@ -84,11 +86,11 @@ class RewardsResource extends BaseResource
             Section::make('')->schema(
                 static::getMainFormComponents()
             ),
-            Section::make('conditions')->schema(
-                static::getConditionsFormComponents()
-            )->heading(
-                __('lunar-rewards::reward.form.conditions.heading')
-            ),
+//            Section::make('conditions')->schema(
+//                static::getConditionsFormComponents()
+//            )->heading(
+//                __('lunar-rewards::reward.form.conditions.heading')
+//            ),
             Section::make('buy_x_earn_y')
                 ->heading(
                     __('lunar-rewards::reward.form.buy_x_earn_y.heading')
@@ -322,7 +324,7 @@ class RewardsResource extends BaseResource
     public static function getFixedAmountFormComponents(): array
     {
         return [
-            Toggle::make('data.fixed_value')->live(),
+            Toggle::make('data.fixed_value')->default(true)->live(),
             TextInput::make('data.percentage')->visible(
                 fn(Get $get) => !$get('data.fixed_value')
             )->numeric(),
@@ -387,8 +389,8 @@ class RewardsResource extends BaseResource
         return [
             CollectionLimitationRelationManager::class,
             BrandLimitationRelationManager::class,
-//            ProductLimitationRelationManager::class,
-//            ProductVariantLimitationRelationManager::class,
+            ProductLimitationRelationManager::class,
+            ProductVariantLimitationRelationManager::class,
 //            ProductRewardRelationManager::class,
 //            ProductConditionRelationManager::class,
         ];

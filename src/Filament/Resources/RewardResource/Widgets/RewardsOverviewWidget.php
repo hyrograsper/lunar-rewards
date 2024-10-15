@@ -20,21 +20,24 @@ class RewardsOverviewWidget extends BaseWidget
         }
 
         $orders = $this->record->orders()
-            ->whereHas("rewards", function ($rewards) {
-                $rewards
-                    ->active()
-                    ->current();
-            })
-            ->withCount(['rewards as points_earned' => function ($query) {
-                $query
-                    ->select(DB::raw('SUM(points) as points_earned'))
-                    ->active()
-                    ->current();
-            }])
+            ->withCount([
+                'rewards as current_points_earned' => function ($query) {
+                    $query
+                        ->select(DB::raw('SUM(points) as current_points_earned'))
+                        ->active()
+                        ->current();
+                },
+                'rewards as total_points_earned' => function ($query) {
+                    $query
+                        ->select(DB::raw('SUM(points) as total_points_earned'));
+                }
+            ])
             ->get();
 
         return [
-            Stat::make(__('lunar-rewards::widgets.customer.rewards_overview.label'), $orders->sum('points_earned')),
+            Stat::make(__('lunar-rewards::widgets.customer.rewards_overview.current'), $orders->sum('current_points_earned')),
+            Stat::make(__('lunar-rewards::widgets.customer.rewards_overview.total'), $orders->sum('total_points_earned')),
+            Stat::make(__('lunar-rewards::widgets.customer.rewards_overview.redeemed'), 0),
         ];
     }
 }
