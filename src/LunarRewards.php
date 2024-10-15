@@ -60,7 +60,8 @@ class LunarRewards implements Plugin
 
         Product::resolveRelationUsing('rewards', function (Product $product) {
             $prefix = config('lunar.database.table_prefix');
-            return $product->belongsToMany(Reward::class, $prefix.'reward_purchasables', 'purchasable_id','reward_id')
+
+            return $product->belongsToMany(Reward::class, $prefix.'reward_purchasables', 'purchasable_id', 'reward_id')
                 ->where('purchasable_type', '=', 'product')
                 ->withTimestamps();
         });

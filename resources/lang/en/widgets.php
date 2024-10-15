@@ -6,6 +6,6 @@ return [
             'current' => 'Current Rewards',
             'total' => 'Total Rewards',
             'redeemed' => 'Rewards Redeemed',
-        ]
-    ]
+        ],
+    ],
 ];

@@ -86,11 +86,11 @@ class RewardsResource extends BaseResource
             Section::make('')->schema(
                 static::getMainFormComponents()
             ),
-//            Section::make('conditions')->schema(
-//                static::getConditionsFormComponents()
-//            )->heading(
-//                __('lunar-rewards::reward.form.conditions.heading')
-//            ),
+            //            Section::make('conditions')->schema(
+            //                static::getConditionsFormComponents()
+            //            )->heading(
+            //                __('lunar-rewards::reward.form.conditions.heading')
+            //            ),
             Section::make('buy_x_earn_y')
                 ->heading(
                     __('lunar-rewards::reward.form.buy_x_earn_y.heading')
@@ -391,8 +391,8 @@ class RewardsResource extends BaseResource
             BrandLimitationRelationManager::class,
             ProductLimitationRelationManager::class,
             ProductVariantLimitationRelationManager::class,
-//            ProductRewardRelationManager::class,
-//            ProductConditionRelationManager::class,
+            //            ProductRewardRelationManager::class,
+            //            ProductConditionRelationManager::class,
         ];
     }
 

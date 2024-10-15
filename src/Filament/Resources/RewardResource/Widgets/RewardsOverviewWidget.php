@@ -30,7 +30,7 @@ class RewardsOverviewWidget extends BaseWidget
                 'rewards as total_points_earned' => function ($query) {
                     $query
                         ->select(DB::raw('SUM(points) as total_points_earned'));
-                }
+                },
             ])
             ->get();
 
