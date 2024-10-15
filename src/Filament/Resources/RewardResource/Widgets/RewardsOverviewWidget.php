@@ -15,7 +15,7 @@ class RewardsOverviewWidget extends BaseWidget
 
     protected function getStats(): array
     {
-        if (!$this->record) {
+        if (! $this->record) {
             return [];
         }
 

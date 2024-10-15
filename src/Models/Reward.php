@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Arr;
-use Kalnoy\Nestedset\QueryBuilder;
 use Lunar\Base\BaseModel;
 use Lunar\Base\Traits\HasChannels;
 use Lunar\Base\Traits\HasCustomerGroups;
@@ -45,7 +44,7 @@ class Reward extends BaseModel implements RewardContract
 
     public function getStatusAttribute(): string
     {
-        $active = $this->starts_at?->isPast() && !$this->ends_at?->isPast();
+        $active = $this->starts_at?->isPast() && ! $this->ends_at?->isPast();
         $expired = $this->ends_at?->isPast();
         $future = $this->starts_at?->isFuture();
 
@@ -149,13 +148,13 @@ class Reward extends BaseModel implements RewardContract
         $types = Arr::wrap($types);
 
         return $query->where(
-            fn($subQuery) => $subQuery->whereDoesntHave('purchasables', fn($query) => $query->when($types, fn($query) => $query->whereIn('type', $types)))
+            fn ($subQuery) => $subQuery->whereDoesntHave('purchasables', fn ($query) => $query->when($types, fn ($query) => $query->whereIn('type', $types)))
                 ->orWhereHas('purchasables',
-                    fn($relation) => $relation->whereIn('purchasable_id', $productIds)
+                    fn ($relation) => $relation->whereIn('purchasable_id', $productIds)
                         ->wherePurchasableType((new Product)->getMorphClass())
                         ->when(
                             $types,
-                            fn($query) => $query->whereIn('type', $types)
+                            fn ($query) => $query->whereIn('type', $types)
                         )
                 )
         );
@@ -170,13 +169,13 @@ class Reward extends BaseModel implements RewardContract
         $types = Arr::wrap($types);
 
         return $query->where(
-            fn($subQuery) => $subQuery->whereDoesntHave('purchasables', fn($query) => $query->when($types, fn($query) => $query->whereIn('type', $types)))
+            fn ($subQuery) => $subQuery->whereDoesntHave('purchasables', fn ($query) => $query->when($types, fn ($query) => $query->whereIn('type', $types)))
                 ->orWhereHas('purchasables',
-                    fn($relation) => $relation->whereIn('purchasable_id', $variantIds)
+                    fn ($relation) => $relation->whereIn('purchasable_id', $variantIds)
                         ->wherePurchasableType((new ProductVariant)->getMorphClass())
                         ->when(
                             $types,
-                            fn($query) => $query->whereIn('type', $types)
+                            fn ($query) => $query->whereIn('type', $types)
                         )
                 )
         );

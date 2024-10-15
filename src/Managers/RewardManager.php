@@ -95,12 +95,12 @@ class RewardManager implements RewardManagerInterface
                 function ($query, $value) {
                     return $query->where(function ($query) use ($value) {
 
-                        return $query->where(fn($query) => $query->products(
+                        return $query->where(fn ($query) => $query->products(
                             $value->lines->pluck('purchasable.product_id')->filter()->values(),
                             ['condition', 'limitation']
                         )
                         )
-                            ->orWhere(fn($query) => $query->productVariants(
+                            ->orWhere(fn ($query) => $query->productVariants(
                                 $value->lines->pluck('purchasable.id')->filter()->values(),
                                 ['condition', 'limitation']
                             )
@@ -117,7 +117,7 @@ class RewardManager implements RewardManagerInterface
                             ->orWhere('coupon', '');
                     });
                 },
-                fn($query, $value) => $query->whereNull('coupon')->orWhere('coupon', '')
+                fn ($query, $value) => $query->whereNull('coupon')->orWhere('coupon', '')
             )->orderBy('priority', 'desc')
             ->orderBy('id')
             ->get();
@@ -175,7 +175,7 @@ class RewardManager implements RewardManagerInterface
             $this->rewards = $this->getRewards($cart);
         }
 
-        foreach ($this->rewards as $reward){
+        foreach ($this->rewards as $reward) {
             $cart = $reward->getType()->apply($cart);
         }
 
