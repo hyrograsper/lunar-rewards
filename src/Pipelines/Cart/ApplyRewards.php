@@ -8,11 +8,17 @@ use Lunar\Models\Cart;
 
 final class ApplyRewards
 {
+    /**
+     * @param Cart $cart
+     * @param Closure $next
+     * @return mixed
+     */
     public function handle(Cart $cart, Closure $next)
     {
-        \Cache::forget(get_class($cart).$cart->id.'_rewards');
+        $cart->rewards_cart->rewards = collect();
+        $cart->rewards_cart->rewardBreakdown = collect();
 
-        Rewards::apply($cart);
+        Rewards::apply($cart->rewards_cart);
 
         return $next($cart);
     }

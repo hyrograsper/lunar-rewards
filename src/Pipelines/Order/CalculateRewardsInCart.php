@@ -9,16 +9,16 @@ final class CalculateRewardsInCart
 {
     public function handle(Order $order, Closure $next)
     {
-        $rewards = \Cache::get(get_class($order->cart).$order->cart->id.'_rewards');
+        $cart = $order->cart->recalculate();
 
-        $rewards?->each(function ($reward) use ($order) {
+        $cart->rewards_cart->rewardBreakdown?->each(function ($reward) use ($order) {
 
             $breakdown = (object) [
                 'reward_id' => $reward->reward->id,
                 'lines' => $reward->lines->map(function ($line) {
                     return (object) [
                         'quantity' => $line->quantity,
-                        'line_id' => $line->line->id,
+                        'line_id' => $line->lineId,
                     ];
                 }),
                 'totalPoints' => $reward->points,
@@ -31,8 +31,6 @@ final class CalculateRewardsInCart
                 ],
             ]);
         });
-
-        \Cache::forget(get_class($order->cart).$order->cart->id.'_rewards');
 
         return $next($order);
     }

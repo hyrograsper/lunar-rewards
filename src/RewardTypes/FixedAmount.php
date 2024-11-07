@@ -4,7 +4,7 @@ namespace Hyrograsper\LunarRewards\RewardTypes;
 
 use Hyrograsper\LunarRewards\Base\ValueObjects\Cart\RewardBreakdown;
 use Hyrograsper\LunarRewards\Base\ValueObjects\Cart\RewardBreakdownLine;
-use Lunar\Models\Cart;
+use Hyrograsper\LunarRewards\Models\Cart;
 
 class FixedAmount extends AbstractRewardType
 {
@@ -46,13 +46,17 @@ class FixedAmount extends AbstractRewardType
 
         $pointsEarned = 0;
 
+        if(count($eligibleLines) == 0){
+            return $cart;
+        }
+
         foreach ($eligibleLines as $line) {
 
             $pointsEarned += $rewardFactor;
 
             $affectedLines->push(
                 new RewardBreakdownLine(
-                    line: $line,
+                    lineId: $line->id,
                     quantity: $line->quantity
                 )
             );
@@ -77,6 +81,10 @@ class FixedAmount extends AbstractRewardType
 
         $pointsEarned = 0;
 
+        if(count($eligibleLines) == 0){
+            return $cart;
+        }
+
         foreach ($eligibleLines as $line) {
 
             $subTotal = $line->subTotal->decimal();
@@ -85,7 +93,7 @@ class FixedAmount extends AbstractRewardType
 
             $affectedLines->push(
                 new RewardBreakdownLine(
-                    line: $line,
+                    lineId: $line->id,
                     quantity: $line->quantity
                 )
             );

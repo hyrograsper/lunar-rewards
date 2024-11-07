@@ -14,6 +14,7 @@ use Hyrograsper\LunarRewards\Models\Reward;
 use Lunar\Admin\Filament\Resources\CustomerResource\Pages\ViewCustomer;
 use Lunar\Admin\Support\Facades\LunarPanel;
 use Lunar\Models\Brand;
+use Lunar\Models\Cart;
 use Lunar\Models\Collection;
 use Lunar\Models\Order;
 use Lunar\Models\Product;
@@ -64,6 +65,10 @@ class LunarRewards implements Plugin
             return $product->belongsToMany(Reward::class, $prefix.'reward_purchasables', 'purchasable_id', 'reward_id')
                 ->where('purchasable_type', '=', 'product')
                 ->withTimestamps();
+        });
+
+        Cart::resolveRelationUsing('rewards_cart', function (Cart $cart) {
+            return $cart->belongsTo(\Hyrograsper\LunarRewards\Models\Cart::class, 'id', 'id');
         });
 
         LunarPanel::extensions([

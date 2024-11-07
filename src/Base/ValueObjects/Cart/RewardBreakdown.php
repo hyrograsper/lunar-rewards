@@ -12,4 +12,13 @@ class RewardBreakdown
         public Collection $lines,
         public Reward $reward,
     ) {}
+
+    public function toArray()
+    {
+        return [
+            'points' => $this->points,
+            'lines' => $this->lines,
+            'reward' => $this->reward,
+        ];
+    }
 }

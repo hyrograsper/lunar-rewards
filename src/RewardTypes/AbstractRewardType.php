@@ -7,7 +7,7 @@ use Hyrograsper\LunarRewards\Base\ValueObjects\Cart\RewardBreakdown;
 use Hyrograsper\LunarRewards\Models\Reward;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
-use Lunar\Models\Cart;
+use Hyrograsper\LunarRewards\Models\Cart;
 
 abstract class AbstractRewardType implements RewardTypeInterface
 {
@@ -52,52 +52,52 @@ abstract class AbstractRewardType implements RewardTypeInterface
         $brandExclusionIds = $this->reward->brands->where('pivot.type', 'exclusion')->pluck('id');
 
         $productIds = $this->reward->purchasableLimitations
-            ->reject(fn ($limitation) => ! $limitation->purchasable)
-            ->map(fn ($limitation) => get_class($limitation->purchasable).'::'.$limitation->purchasable->id);
+            ->reject(fn($limitation) => !$limitation->purchasable)
+            ->map(fn($limitation) => get_class($limitation->purchasable) . '::' . $limitation->purchasable->id);
 
         $productExclusionIds = $this->reward->purchasableExclusions
-            ->reject(fn ($limitation) => ! $limitation->purchasable)
-            ->map(fn ($limitation) => get_class($limitation->purchasable).'::'.$limitation->purchasable->id);
+            ->reject(fn($limitation) => !$limitation->purchasable)
+            ->map(fn($limitation) => get_class($limitation->purchasable) . '::' . $limitation->purchasable->id);
 
-        $lines = $cart->lines;
+        $lines = collect();
 
         if ($collectionIds->count()) {
-            $lines = $lines->filter(function ($line) use ($collectionIds) {
+            $lines = $cart->lines->filter(function ($line) use ($collectionIds) {
                 return $line->purchasable->product()->whereHas('collections', function ($query) use ($collectionIds) {
-                    $query->whereIn((new \Lunar\Models\Collection)->getTable().'.id', $collectionIds);
+                    $query->whereIn((new \Lunar\Models\Collection)->getTable() . '.id', $collectionIds);
                 })->exists();
             });
         }
 
         if ($collectionExclusionIds->count()) {
-            $lines = $lines->reject(function ($line) use ($collectionExclusionIds) {
+            $lines = $cart->lines->reject(function ($line) use ($collectionExclusionIds) {
                 return $line->purchasable->product()->whereHas('collections', function ($query) use ($collectionExclusionIds) {
-                    $query->whereIn((new Collection)->getTable().'.id', $collectionExclusionIds);
+                    $query->whereIn((new Collection)->getTable() . '.id', $collectionExclusionIds);
                 })->exists();
             });
         }
 
         if ($brandIds->count()) {
-            $lines = $lines->reject(function ($line) use ($brandIds) {
-                return ! $brandIds->contains($line->purchasable->product->brand_id);
+            $lines = $cart->lines->reject(function ($line) use ($brandIds) {
+                return !$brandIds->contains($line->purchasable->product->brand_id);
             });
         }
 
         if ($brandExclusionIds->count()) {
-            $lines = $lines->reject(function ($line) use ($brandExclusionIds) {
+            $lines = $cart->lines->reject(function ($line) use ($brandExclusionIds) {
                 return $brandExclusionIds->contains($line->purchasable->product->brand_id);
             });
         }
 
         if ($productIds->count()) {
-            $lines = $lines->filter(function ($line) use ($productIds) {
-                return $productIds->contains(get_class($line->purchasable).'::'.$line->purchasable->id) || $productIds->contains(get_class($line->purchasable->product).'::'.$line->purchasable->product->id);
+            $lines = $cart->lines->filter(function ($line) use ($productIds) {
+                return $productIds->contains(get_class($line->purchasable) . '::' . $line->purchasable->id) || $productIds->contains(get_class($line->purchasable->product) . '::' . $line->purchasable->product->id);
             });
         }
 
         if ($productExclusionIds->count()) {
-            $lines = $lines->reject(function ($line) use ($productExclusionIds) {
-                return $productExclusionIds->contains(get_class($line->purchasable).'::'.$line->purchasable->id) || $productExclusionIds->contains(get_class($line->purchasable->product).'::'.$line->purchasable->product->id);
+            $lines = $cart->lines->reject(function ($line) use ($productExclusionIds) {
+                return $productExclusionIds->contains(get_class($line->purchasable) . '::' . $line->purchasable->id) || $productExclusionIds->contains(get_class($line->purchasable->product) . '::' . $line->purchasable->product->id);
             });
         }
 
@@ -117,7 +117,7 @@ abstract class AbstractRewardType implements RewardTypeInterface
         $validCoupon = $cartCoupon ? ($cartCoupon === $conditionCoupon) : blank($conditionCoupon);
 
         $minSpend = ($data['min_prices'][$cart->currency->code] ?? 0) / $cart->currency->factor;
-        $minSpend = (int) bcmul($minSpend, $cart->currency->factor);
+        $minSpend = (int)bcmul($minSpend, $cart->currency->factor);
 
         $lines = $this->getEligibleLines($cart);
         $validMinSpend = $minSpend ? $minSpend < $lines->sum('subTotal.value') : true;
@@ -150,11 +150,11 @@ abstract class AbstractRewardType implements RewardTypeInterface
      */
     protected function addRewardBreakdown(Cart $cart, RewardBreakdown $breakdown)
     {
-        $rewardBreakdown = \Cache::get(get_class($cart).$cart->id.'_rewards') ?? collect();
+        if (! $cart->rewardBreakdown) {
+            $cart->rewardBreakdown = collect();
+        }
 
-        $rewardBreakdown->push($breakdown);
-
-        \Cache::put(get_class($cart).$cart->id.'_rewards', $rewardBreakdown);
+        $cart->rewardBreakdown->push($breakdown);
 
         return $this;
     }

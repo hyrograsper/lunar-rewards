@@ -4,7 +4,7 @@ namespace Hyrograsper\LunarRewards\RewardTypes;
 
 use Hyrograsper\LunarRewards\Base\ValueObjects\Cart\RewardBreakdown;
 use Hyrograsper\LunarRewards\Base\ValueObjects\Cart\RewardBreakdownLine;
-use Lunar\Models\Cart;
+use Hyrograsper\LunarRewards\Models\Cart;
 use Lunar\Models\CartLine;
 
 class SpendXEarnY extends AbstractRewardType
@@ -40,6 +40,10 @@ class SpendXEarnY extends AbstractRewardType
 
         $pointsEarned = 0;
 
+        if(count($eligibleLines) == 0){
+            return $cart;
+        }
+
         foreach ($eligibleLines as $line) {
 
             $subTotal = $line->subTotal->decimal();
@@ -51,7 +55,7 @@ class SpendXEarnY extends AbstractRewardType
 
                 $affectedLines->push(
                     new RewardBreakdownLine(
-                        line: $line,
+                        lineId: $line->id,
                         quantity: $line->quantity
                     )
                 );

@@ -4,8 +4,7 @@ namespace Hyrograsper\LunarRewards\Base;
 
 use Hyrograsper\LunarRewards\Base\DataTransferObjects\CartReward;
 use Illuminate\Support\Collection;
-use Lunar\Models\Cart;
-
+use Hyrograsper\LunarRewards\Models\Cart;
 interface RewardManagerInterface
 {
     /**
@@ -34,9 +33,4 @@ interface RewardManagerInterface
      * Apply discounts for a given cart.
      */
     public function apply(Cart $cart): Cart;
-
-    /**
-     * Validate a given coupon against all system discounts.
-     */
-    public function validateCoupon(string $coupon): bool;
 }
