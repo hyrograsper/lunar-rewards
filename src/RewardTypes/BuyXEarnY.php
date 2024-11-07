@@ -26,11 +26,11 @@ class BuyXEarnY extends AbstractRewardType
     {
         $data = $this->reward->data;
 
-        if (!$data['min_qty']) {
+        if (! $data['min_qty']) {
             return $cart;
         }
 
-        $requiredSpend = (int)$data['min_qty'];
+        $requiredSpend = (int) $data['min_qty'];
 
         $rewardQty = $data['reward_qty'];
 
@@ -48,7 +48,7 @@ class BuyXEarnY extends AbstractRewardType
 
             if ($line->quantity >= $requiredSpend) {
                 $eligibleFactor = collect(range(0, $line->quantity, $requiredSpend))
-                    ->reject(fn($i) => $i == 0)
+                    ->reject(fn ($i) => $i == 0)
                     ->count();
 
                 $affectedLines->push(

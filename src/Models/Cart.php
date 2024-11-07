@@ -10,11 +10,11 @@ class Cart extends \Lunar\Models\Cart
     {
         parent::__construct($attributes);
 
-        $this->cachableProperties  = array_merge(
+        $this->cachableProperties = array_merge(
             $this->cachableProperties,
             [
                 'rewards',
-                'rewardBreakdown'
+                'rewardBreakdown',
             ]
         );
     }

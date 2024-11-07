@@ -46,7 +46,7 @@ class FixedAmount extends AbstractRewardType
 
         $pointsEarned = 0;
 
-        if(count($eligibleLines) == 0){
+        if (count($eligibleLines) == 0) {
             return $cart;
         }
 
@@ -81,7 +81,7 @@ class FixedAmount extends AbstractRewardType
 
         $pointsEarned = 0;
 
-        if(count($eligibleLines) == 0){
+        if (count($eligibleLines) == 0) {
             return $cart;
         }
 
