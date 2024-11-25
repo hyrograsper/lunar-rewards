@@ -9,8 +9,6 @@ use Lunar\Models\Cart;
 final class ApplyRewards
 {
     /**
-     * @param Cart $cart
-     * @param Closure $next
      * @return mixed
      */
     public function handle(Cart $cart, Closure $next)
