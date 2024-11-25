@@ -59,7 +59,7 @@ abstract class AbstractRewardType implements RewardTypeInterface
             ->reject(fn($limitation) => !$limitation->purchasable)
             ->map(fn($limitation) => get_class($limitation->purchasable) . '::' . $limitation->purchasable->id);
 
-        $lines = collect();
+        $lines = $cart->lines;
 
         if ($collectionIds->count()) {
             $lines = $cart->lines->filter(function ($line) use ($collectionIds) {
