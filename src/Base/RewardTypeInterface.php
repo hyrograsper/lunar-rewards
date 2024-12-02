@@ -2,7 +2,7 @@
 
 namespace Hyrograsper\LunarRewards\Base;
 
-use Hyrograsper\LunarRewards\Models\Cart;
+use Lunar\Models\Cart;
 
 interface RewardTypeInterface
 {

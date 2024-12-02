@@ -4,10 +4,11 @@ namespace Hyrograsper\LunarRewards\RewardTypes;
 
 use Hyrograsper\LunarRewards\Base\RewardTypeInterface;
 use Hyrograsper\LunarRewards\Base\ValueObjects\Cart\RewardBreakdown;
-use Hyrograsper\LunarRewards\Models\Cart;
+//use Hyrograsper\LunarRewards\Models\Cart;
 use Hyrograsper\LunarRewards\Models\Reward;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Collection;
+use Lunar\Models\Cart;
 
 abstract class AbstractRewardType implements RewardTypeInterface
 {
@@ -150,11 +151,11 @@ abstract class AbstractRewardType implements RewardTypeInterface
      */
     protected function addRewardBreakdown(Cart $cart, RewardBreakdown $breakdown)
     {
-        if (! $cart->rewardBreakdown) {
-            $cart->rewardBreakdown = collect();
+        if (! $cart->rewards_cart->rewardBreakdown) {
+            $cart->rewards_cart->rewardBreakdown = collect();
         }
 
-        $cart->rewardBreakdown->push($breakdown);
+        $cart->rewards_cart->rewardBreakdown->push($breakdown);
 
         return $this;
     }

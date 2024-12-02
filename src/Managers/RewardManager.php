@@ -4,12 +4,12 @@ namespace Hyrograsper\LunarRewards\Managers;
 
 use Hyrograsper\LunarRewards\Base\DataTransferObjects\CartReward;
 use Hyrograsper\LunarRewards\Base\RewardManagerInterface;
-use Hyrograsper\LunarRewards\Models\Cart;
 use Hyrograsper\LunarRewards\Models\Reward;
 use Hyrograsper\LunarRewards\RewardTypes\BuyXEarnY;
 use Hyrograsper\LunarRewards\RewardTypes\FixedAmount;
 use Hyrograsper\LunarRewards\RewardTypes\SpendXEarnY;
 use Illuminate\Support\Collection;
+use Lunar\Models\Cart;
 use Lunar\Models\Channel;
 use Lunar\Models\CustomerGroup;
 

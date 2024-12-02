@@ -4,7 +4,7 @@ namespace Hyrograsper\LunarRewards\RewardTypes;
 
 use Hyrograsper\LunarRewards\Base\ValueObjects\Cart\RewardBreakdown;
 use Hyrograsper\LunarRewards\Base\ValueObjects\Cart\RewardBreakdownLine;
-use Hyrograsper\LunarRewards\Models\Cart;
+use Lunar\Models\Cart;
 
 class FixedAmount extends AbstractRewardType
 {
