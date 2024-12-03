@@ -5,15 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/hyrograsper/lunar-rewards/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/hyrograsper/lunar-rewards/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/hyrograsper/lunar-rewards.svg?style=flat-square)](https://packagist.org/packages/hyrograsper/lunar-rewards)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/lunar-rewards.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/lunar-rewards)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+This package is to add rewards to [Lunar](https://lunarphp.io). We have based this package off of how Lunar has implemented their discounts.
 
 ## Installation
 
@@ -52,8 +44,7 @@ php artisan vendor:publish --tag="lunar-rewards-views"
 ## Usage
 
 ```php
-$lunarRewards = new Hyrograsper\LunarRewards();
-echo $lunarRewards->echoPhrase('Hello, Hyrograsper!');
+Coming soon.
 ```
 
 ## Testing
@@ -77,6 +68,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## Credits
 
 - [Brad Fowler](https://github.com/bradfowler)
+- [Alec Garcia](https://github.com/alecgarcia)
 - [All Contributors](../../contributors)
 
 ## License
