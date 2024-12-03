@@ -12,44 +12,49 @@ interface Reward
     public function users(): BelongsToMany;
 
     /**
-     * Return the discount's purchasables relationship.
+     * Return the reward's purchasables relationship.
      */
     public function purchasables(): HasMany;
 
     /**
-     * Return the discount's purchasable conditions relationship.
+     * Return the reward's purchasable conditions relationship.
      */
     public function purchasableConditions(): HasMany;
 
     /**
-     * Return the discount's purchasable exclusions relationship.
+     * Return the reward's purchasable exclusions relationship.
      */
     public function purchasableExclusions(): HasMany;
 
     /**
-     * Return the discount's purchasable limitations relationship.
+     * Return the reward's purchasable limitations relationship.
      */
     public function purchasableLimitations(): HasMany;
 
     /**
-     * Return the discount's type class.
+     * Return the reward's type class.
      */
     public function getType(): AbstractRewardType;
 
     /**
-     * Return the discount's collections relationship.
+     * Return the reward's collections relationship.
      */
     public function collections(): BelongsToMany;
 
     /**
-     * Return the discount's customer groups relationship.
+     * Return the reward's customer groups relationship.
      */
     public function customerGroups(): BelongsToMany;
 
     /**
-     * Return the discount's brands relationship.
+     * Return the reward's brands relationship.
      */
     public function brands(): BelongsToMany;
+
+    /**
+     * Return true or false if rewards has attached limitations or exclusions.
+     */
+    public function hasExclusionsOrLimitations(): bool;
 
     /**
      * Return the active scope.
@@ -67,7 +72,12 @@ interface Reward
     public function scopeProductVariants(Builder $query, iterable $variantIds = [], array|string $types = []): Builder;
 
     /**
-     * Return when the discount is usable.
+     * Return when the reward is usable.
      */
     public function scopeUsable(Builder $query): Builder;
+
+    /**
+     * Return when the reward is in the current start end timeframe.
+     */
+    public function scopeCurrent(Builder $query): Builder;
 }
